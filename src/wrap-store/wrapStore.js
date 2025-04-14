@@ -136,12 +136,17 @@ export default ({ channelName = defaultOpts.channelName } = defaultOpts) => {
       };
 
       browserAPI.runtime.sendMessage(...args, onErrorCallback);
+
+      /*
+        * With this approach, if you open the extension in a new tab, we will patch the state twice.
+        * We still do not use redux for content scripts, so we can rework this code only if necessary.
+        */
       // We will broadcast state changes to all tabs to sync state across content scripts
-      return browserAPI.tabs.query({}, (tabs) => {
-        for (const tab of tabs) {
-          browserAPI.tabs.sendMessage(tab.id, ...args, onErrorCallback);
-        }
-      });
+      // return browserAPI.tabs.query({}, (tabs) => {
+      //   for (const tab of tabs) {
+      //     browserAPI.tabs.sendMessage(tab.id, ...args, onErrorCallback);
+      //   }
+      // });
     });
 
     let currentState = store.getState();
