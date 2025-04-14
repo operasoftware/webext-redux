@@ -6,15 +6,15 @@
   "typings": "./index.d.ts",
   "scripts": {
     "umd-build": "rollup -c",
-    "build": "npx babel src --out-dir lib && npm run umd-build",
+    "build": "babel src --out-dir lib && npm run umd-build",
+    "prepare": "npm run build",
     "lint-src": "eslint src/{**/,}*.js",
     "lint-test": "eslint test/{**/,}*.js",
     "lint": "npm run lint-src && npm run lint-test",
     "prepublishOnly": "npm run build",
     "pretest": "babel src --out-dir lib",
     "test-run": "mocha --require @babel/register --recursive",
-    "test": "npm run lint && npm run test-run",
-    "postinstall": "npm run build"
+    "test": "npm run lint && npm run test-run"
   },
   "repository": {
     "type": "git",
